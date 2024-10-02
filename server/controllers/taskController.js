@@ -1,15 +1,15 @@
 // server/controllers/taskController.js
 
 import Task from '../models/task.js';
+import { io } from '../server.js';
 
 // Create a new task
 export const createTask = async (req, res) => {
     try {
-        const task = new Task({
-            ...req.body,
-            userId: req.user._id
-        });
+        const task = new Task({ ...req.body, userId: req.user._id });
         await task.save();
+
+        io.emit('taskCreated', task); // Emit real-time update for task creation
         res.status(201).json(task);
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -44,6 +44,8 @@ export const updateTask = async (req, res) => {
         if (!task) {
             return res.status(404).json({ error: 'Task not found' });
         }
+
+        io.emit('taskUpdated', task); // Emit real-time update for task update
         res.json(task);
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -57,6 +59,8 @@ export const deleteTask = async (req, res) => {
         if (!task) {
             return res.status(404).json({ error: 'Task not found' });
         }
+
+        io.emit('taskDeleted', task._id); // Emit real-time update for task deletion
         res.json({ message: 'Task deleted' });
     } catch (error) {
         res.status(500).json({ error: error.message });

@@ -1,22 +1,12 @@
-import { useEffect, useState } from 'react';
-import { getTasks, deleteTask } from '../api';
+// client\src\components\TaskList.jsx
+
+import { deleteTask } from '../api';
 import PropTypes from 'prop-types';
 
-const TaskList = ({ onEdit }) => {
-    const [tasks, setTasks] = useState([]);
-
-    useEffect(() => {
-        loadTasks();
-    }, []);
-
-    const loadTasks = async () => {
-        const { data } = await getTasks();
-        setTasks(data);
-    };
+const TaskList = ({ tasks, onEdit }) => {
 
     const handleDelete = async (id) => {
         await deleteTask(id);
-        loadTasks();
     };
 
     return (
@@ -41,6 +31,7 @@ const TaskList = ({ onEdit }) => {
 };
 
 TaskList.propTypes = {
+    tasks: PropTypes.array.isRequired,
     onEdit: PropTypes.func.isRequired,
 };
 

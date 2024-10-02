@@ -26,7 +26,7 @@ const LoginPage = () => {
         setLoading(true); // Start loading
 
         try {
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, formData);
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, formData);
             const { token } = response.data;
             login(token);
             navigate('/');

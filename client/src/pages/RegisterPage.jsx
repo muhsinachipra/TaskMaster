@@ -29,7 +29,7 @@ const RegisterPage = () => {
         }
 
         try {
-            await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, formData);
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, formData);
             navigate('/login');
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
