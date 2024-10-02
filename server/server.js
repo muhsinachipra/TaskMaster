@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import taskRoutes from './routes/taskRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/api', taskRoutes);
+app.use('/auth', authRoutes);
 
 const connectDB = async () => {
     try {
@@ -23,7 +25,7 @@ const connectDB = async () => {
         console.log('MongoDB connected');
     } catch (err) {
         console.error('Error connecting to MongoDB:', err.message);
-        process.exit(1); // Exit the process with failure
+        process.exit(1);
     }
 };
 
