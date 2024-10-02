@@ -19,6 +19,11 @@ const taskSchema = new Schema({
         type: Date,
         default: Date.now,
     },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
 });
 
 const Task = model('Task', taskSchema);

@@ -5,7 +5,10 @@ import Task from '../models/task.js';
 // Create a new task
 export const createTask = async (req, res) => {
     try {
-        const task = new Task(req.body);
+        const task = new Task({
+            ...req.body,
+            userId: req.user._id
+        });
         await task.save();
         res.status(201).json(task);
     } catch (error) {
@@ -13,17 +16,15 @@ export const createTask = async (req, res) => {
     }
 };
 
-// Get all tasks
 export const getAllTasks = async (req, res) => {
     try {
-        const tasks = await Task.find();
+        const tasks = await Task.find({ userId: req.user._id });
         res.json(tasks);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
-// Get a single task by ID
 export const getTaskById = async (req, res) => {
     try {
         const task = await Task.findById(req.params.id);

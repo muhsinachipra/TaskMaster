@@ -1,4 +1,4 @@
-// frontend\src\context\AuthContext.jsx
+// client\src\context\AuthContext.jsx
 
 import { createContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
