@@ -23,6 +23,8 @@ const TaskForm = ({ selectedTask, onSave }) => {
             await createTask(task);
         }
         onSave();
+        // Clear the form after task is saved
+        setTask({ title: '', description: '' });
     };
 
     return (
