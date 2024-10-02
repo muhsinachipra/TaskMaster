@@ -7,7 +7,6 @@ import jwt from 'jsonwebtoken';
 // Register a new user
 export const register = async (req, res) => {
     try {
-        console.log('req.body:', req.body);
         const { name, email, password } = req.body;
 
         // Check if all required fields are present
@@ -43,8 +42,6 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        console.log("req.body:", req.body);
-        console.log("email: ", email, "password: ", password);
 
         // Check if user exists
         const user = await User.findOne({ email });
