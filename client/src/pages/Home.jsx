@@ -17,11 +17,10 @@ const Home = () => {
     const { logout } = useContext(AuthContext);
 
     useEffect(() => {
-        
         const fetchTasks = async () => {
             try {
-                const response = await getTasks(); // Uses the getTasks function
-                setTasks(response.data); // Axios automatically parses JSON
+                const response = await getTasks(); // Fetch tasks from the API
+                setTasks(response.data);
             } catch (error) {
                 console.error('Error fetching tasks:', error);
             }
@@ -35,9 +34,11 @@ const Home = () => {
         });
 
         socket.on('taskUpdated', (updatedTask) => {
-            setTasks((prevTasks) => prevTasks.map((task) =>
-                task._id === updatedTask._id ? updatedTask : task
-            ));
+            setTasks((prevTasks) =>
+                prevTasks.map((task) =>
+                    task._id === updatedTask._id ? updatedTask : task
+                )
+            );
         });
 
         socket.on('taskDeleted', (deletedTaskId) => {
@@ -51,6 +52,7 @@ const Home = () => {
             socket.off('taskDeleted');
         };
     }, []);
+
 
     const handleEdit = (task) => {
         setSelectedTask(task);

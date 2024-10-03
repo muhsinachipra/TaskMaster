@@ -4,8 +4,7 @@ import axios from 'axios';
 
 const API_URL = `${import.meta.env.VITE_API_URL}/api/tasks`;
 
-// Get the token from localStorage (or any other storage mechanism you're using)
-const getAuthToken = () => localStorage.getItem('token');  // Assuming the token is stored in localStorage
+const getAuthToken = () => localStorage.getItem('token');
 
 export const getTasks = () => axios.get(API_URL, {
     headers: {
