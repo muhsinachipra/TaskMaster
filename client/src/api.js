@@ -29,3 +29,9 @@ export const deleteTask = (id) => axios.delete(`${API_URL}/${id}`, {
         'Authorization': `Bearer ${getAuthToken()}`,
     },
 });
+
+export const getTaskStats = () => axios.get(`${API_URL}/stats`, {
+    headers: {
+        'Authorization': `Bearer ${getAuthToken()}`,
+    },
+});

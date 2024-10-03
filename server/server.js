@@ -27,7 +27,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Use consistent route prefixes
-app.use('/api', taskRoutes);
+app.use('/api/tasks', taskRoutes);
 app.use('/api/auth', authRoutes);
 
 const connectDB = async () => {

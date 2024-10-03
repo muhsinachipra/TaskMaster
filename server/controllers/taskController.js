@@ -66,3 +66,22 @@ export const deleteTask = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+// Get task statistics
+export const getTaskStats = async (req, res) => {
+    try {
+        const userId = req.user._id;
+
+        const totalTasks = await Task.countDocuments({ userId });
+        const completedTasks = await Task.countDocuments({ userId, completed: true });
+        const overdueTasks = await Task.countDocuments({ userId, completed: false, });
+
+        res.status(200).json({
+            totalTasks,
+            completedTasks,
+            overdueTasks,
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to retrieve task statistics' });
+    }
+};

@@ -6,10 +6,11 @@ import * as taskController from '../controllers/taskController.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 
 // Route definitions using controller methods
-router.post('/tasks', authMiddleware, taskController.createTask);
-router.get('/tasks', authMiddleware, taskController.getAllTasks);
-router.get('/tasks/:id', authMiddleware, taskController.getTaskById);
-router.put('/tasks/:id', authMiddleware, taskController.updateTask);
-router.delete('/tasks/:id', authMiddleware, taskController.deleteTask);
+router.post('/', authMiddleware, taskController.createTask);
+router.get('/', authMiddleware, taskController.getAllTasks);
+router.get('/stats', authMiddleware, taskController.getTaskStats);
+router.get('/:id', authMiddleware, taskController.getTaskById);
+router.put('/:id', authMiddleware, taskController.updateTask);
+router.delete('/:id', authMiddleware, taskController.deleteTask);
 
 export default router;

@@ -7,6 +7,7 @@ const authMiddleware = async (req, res, next) => {
     const token = req.header('Authorization')?.replace('Bearer ', '');
 
     if (!token) {
+        console.log('Access denied')
         return res.status(401).json({ error: 'Access denied' });
     }
 
