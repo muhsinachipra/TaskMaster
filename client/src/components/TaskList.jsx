@@ -2,6 +2,8 @@
 
 import { updateTask, deleteTask } from '../api';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const TaskList = ({ tasks, onEdit }) => {
 
@@ -21,20 +23,24 @@ const TaskList = ({ tasks, onEdit }) => {
                 {tasks.map((task) => (
                     <li key={task._id} className="flex justify-between p-2 border-b">
                         <div>
-                            <h3 className={`text-xl ${task.completed ? 'line-through' : ''}`}>
+                            {/* Toggle completion when clicking on task title */}
+                            <h3 
+                                onClick={() => handleToggleComplete(task)} 
+                                className={`text-xl cursor-pointer ${task.completed ? 'line-through' : ''}`}
+                            >
                                 {task.title}
                             </h3>
                             <p>{task.description}</p>
                         </div>
-                        <div>
-                            <input
-                                type="checkbox"
-                                checked={task.completed}
-                                onChange={() => handleToggleComplete(task)} // Toggle completion
-                                className="mr-2"
-                            />
-                            <button onClick={() => onEdit(task)} className="mr-2 text-blue-500">Edit</button>
-                            <button onClick={() => handleDelete(task._id)} className="text-red-500">Delete</button>
+                        <div className="flex items-center">
+                            {/* Edit Icon */}
+                            <button onClick={() => onEdit(task)} className="mr-2 text-blue-500">
+                                <FontAwesomeIcon icon={faEdit} />
+                            </button>
+                            {/* Delete Icon */}
+                            <button onClick={() => handleDelete(task._id)} className="text-red-500">
+                                <FontAwesomeIcon icon={faTrash} />
+                            </button>
                         </div>
                     </li>
                 ))}
