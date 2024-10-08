@@ -18,7 +18,7 @@ const allowedOrigins = process.env.CORS_ORIGIN ? [process.env.CORS_ORIGIN] : '*'
 
 const corsOptions = {
     origin: allowedOrigins,
-    methods: ['GET', 'POST'],
+    methods: ["GET", "PUT", "PATCH", "POST", "DELETE"],
     credentials: true,
 };
 
@@ -27,7 +27,7 @@ app.use(cors(corsOptions));
 const io = new Server(server, {
     cors: {
         origin: allowedOrigins,
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        methods: ["GET", "PUT", "PATCH", "POST", "DELETE"],
         credentials: true,
     },
 });
