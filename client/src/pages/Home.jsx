@@ -1,3 +1,5 @@
+// client\src\pages\Home.jsx
+
 import { useState, useEffect, useContext } from 'react';
 import TaskList from '../components/TaskList';
 import TaskForm from '../components/TaskForm';
@@ -5,6 +7,7 @@ import { AuthContext } from '../context/AuthContext';
 import { io } from 'socket.io-client';
 import { getTasks, getTaskStats } from '../api';
 import TaskStats from '../components/TaskStats';
+import { ClipLoader } from 'react-spinners'; // Import the spinner component
 
 const API_URL = `${import.meta.env.VITE_API_URL}`;
 
@@ -16,23 +19,31 @@ const Home = () => {
     const [taskStats, setTaskStats] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { logout } = useContext(AuthContext);
+    const [loadingTasks, setLoadingTasks] = useState(true); // Loading state for tasks
+    const [loadingStats, setLoadingStats] = useState(true); // Loading state for stats
 
     useEffect(() => {
         const fetchTasks = async () => {
+            setLoadingTasks(true); // Start loading
             try {
                 const response = await getTasks();
                 setTasks(response.data);
             } catch (error) {
                 console.error('Error fetching tasks:', error);
+            } finally {
+                setLoadingTasks(false); // End loading
             }
         };
 
         const fetchStats = async () => {
+            setLoadingStats(true); // Start loading
             try {
                 const response = await getTaskStats();
                 setTaskStats(response.data);
             } catch (error) {
                 console.error('Error fetching task stats:', error);
+            } finally {
+                setLoadingStats(false); // End loading
             }
         };
 
@@ -109,13 +120,25 @@ const Home = () => {
             {/* Layout for Task List and Stats */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Task List */}
-                <TaskList tasks={tasks} onEdit={handleEdit} />
+                {loadingTasks ? (
+                    <div className="flex justify-center items-center col-span-1">
+                        <ClipLoader size={35} color={"#3498db"} loading={loadingTasks} />
+                    </div>
+                ) : (
+                    <TaskList tasks={tasks} onEdit={handleEdit} />
+                )}
     
                 {/* Task Stats */}
-                {taskStats && (
-                    <div className="mt-6 lg:mt-0">
-                        <TaskStats stats={taskStats} />
+                {loadingStats ? (
+                    <div className="flex justify-center items-center col-span-1">
+                        <ClipLoader size={35} color={"#3498db"} loading={loadingStats} />
                     </div>
+                ) : (
+                    taskStats && (
+                        <div className="mt-6 lg:mt-0">
+                            <TaskStats stats={taskStats} />
+                        </div>
+                    )
                 )}
             </div>
     
@@ -135,7 +158,6 @@ const Home = () => {
             )}
         </div>
     );
-    
 };
 
 export default Home;

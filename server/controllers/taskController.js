@@ -1,6 +1,6 @@
 // server/controllers/taskController.js
 
-import Task from '../models/task.js';
+import Task from '../models/Task.js';
 import { io } from '../server.js';
 
 // Create a new task
