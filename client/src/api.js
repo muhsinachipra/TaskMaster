@@ -35,3 +35,9 @@ export const getTaskStats = () => axios.get(`${API_URL}/stats`, {
         'Authorization': `Bearer ${getAuthToken()}`,
     },
 });
+
+export const searchTasks = (query) => axios.get(`${API_URL}?search=${encodeURIComponent(query)}`, {
+    headers: {
+        'Authorization': `Bearer ${getAuthToken()}`,
+    },
+});
