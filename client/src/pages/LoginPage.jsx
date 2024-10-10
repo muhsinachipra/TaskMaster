@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/useAuth';
+import { ClipLoader } from 'react-spinners';
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ const LoginPage = () => {
     });
 
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false); // Loading state for activity indicator
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { login } = useAuth();
 
@@ -23,7 +24,7 @@ const LoginPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true); // Start loading
+        setLoading(true);
 
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, formData);
@@ -67,10 +68,16 @@ const LoginPage = () => {
                     />
                     <button
                         type="submit"
-                        className="w-full px-4 py-2 font-bold text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
-                        disabled={loading} // Disable button while loading
+                        className="w-full px-4 py-2 font-bold text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 relative" // Add relative positioning
+                        disabled={loading}
                     >
-                        {loading ? 'Logging in...' : 'Login'} {/* Show loading text */}
+                        {loading ? (
+                            <div className="flex items-center justify-center">
+                                <ClipLoader loading={loading} size={20} color="#ffffff" />
+                            </div>
+                        ) : (
+                            'Login'
+                        )}
                     </button>
                 </form>
                 <div className="text-center mt-4">
